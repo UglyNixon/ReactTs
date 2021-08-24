@@ -1,33 +1,40 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import Card, { CardVariant } from './components/Card';
-import UserList from './components/UserList';
-import { ITodo, Iuser } from './types/types';
-import axios from 'axios'
-import List from './components/List';
-import UserItem from './components/UserItem';
+
+
+
+
+
+import {BrowserRouter,NavLink,Route} from 'react-router-dom'
+import UserPage from './components/UserPage';
+import TodosPage from './components/TodosPage';
+import UserItemsPage from './components/UserItemsPage';
+import TodosItemsPage from './components/TodosItemsPage';
 
 const App = () => {
-    const [users, setUsers] = useState<Iuser[]>([]);
-    const [todo, setTodo] = useState<ITodo[]>([]);
+   
+  
 
-useEffect(()=>{fetchTodos()},[])
-    
-const fetchTodos= async()=>{
-        try {
-            const response =await axios.get<ITodo[]>('https://jsonplaceholder.typicode.com/users');
-            setTodo(response.data)
-        } catch (error) {
-            alert(error)
-        }
-    }
     return (
-        <div>
-           <Card width='200px' height='200px' variant={CardVariant.primary} onClick={(num)=>console.log(num)}>
-               <button>кнопка</button>
-           </Card>
-           <List items={users} renderItem={(user)=><UserItem user={user} key={user.id}/>}/>
-        </div>
+      <BrowserRouter>
+      <div>
+          <div>
+              <NavLink to='/users'>Пользователи</NavLink>
+              <NavLink to='/todos' style={{marginLeft:10}}>Todos</NavLink>
+          </div>
+          <Route path='/users' exact>
+        <UserPage/>
+          </Route>
+          <Route path='/todos' exact>
+              <TodosPage/>
+          </Route>
+          <Route path='/users/:id'>
+              <UserItemsPage/>
+          </Route>
+          <Route path='/todos/:id'>
+              <TodosItemsPage/>
+          </Route>
+      </div>
+      
+      </BrowserRouter>
     );
 };
 

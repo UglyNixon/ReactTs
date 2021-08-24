@@ -1,13 +1,15 @@
 import React, { FC } from 'react';
 import { Iuser } from '../types/types';
 interface UserItemProps {
-    user:Iuser
+    user:Iuser,
+    onClick:(user:Iuser)=>void
 }
-const UserItem:FC<UserItemProps> = ({user}) => {
+const UserItem:FC<UserItemProps> = ({user,onClick}) => {
     return (
         
              <div
              style={{padding:'15px 15px',border:'1px solid teal'}}
+             onClick={()=>onClick(user)}
              >
 
                  
